@@ -8,7 +8,6 @@ export class LoginPage {
   private readonly usernameInput: Locator;
   private readonly passwordInput: Locator;
   private readonly loginButton: Locator;
-  private readonly resetPasswordLink: Locator;
   private readonly passwordForgottenButton: Locator;
   constructor(page: Page) {
     this.page = page;
@@ -16,8 +15,7 @@ export class LoginPage {
     this.usernameInput = page.locator("#username");
     this.passwordInput = page.locator("#password");
     this.loginButton = page.locator('[type="submit"]');
-    this.resetPasswordLink = page.locator("#forget_password");
-    this.passwordForgottenButton = page.locator("#password_forgotten");
+    this.passwordForgottenButton = page.locator("#forget_password");
   }
   // Při vytváření metod doporučím přístup začít s atomickými (malými) metodami s jedním krokem a pak vytvářet sdružující metody
   // Například: typeUsername - jeden krok, login - sdružení více kroků
@@ -46,9 +44,17 @@ export class LoginPage {
   async login(username: string, password: string) {
     await this.fillUsername(username);
     await this.fillPassword(password);
-    await this.clickLogin();
-    return new DashboardPage(this.page);
+    return this.clickLogin();
   }
+
+  /*   async login(username: string, password: string) {
+     do sdružující metody můžeme přidat test.step, aby se nám v reportu zobrazily jednotlivé kroky
+    await test.step("Login to Pmtool", async () => {
+      await this.fillUsername(username);
+      await this.fillPassword(password);
+      return this.clickLogin();
+    });
+  } */
 
   async clickPasswordForgotten() {
     await this.passwordForgottenButton.click();
