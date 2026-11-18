@@ -6,7 +6,7 @@ test("Page Object Test: Reset password in PMTool", async ({ page }) => {
   const loginPage = new LoginPage(page);
   const lostPasswordPage = new LostPasswordPage(page);
   await loginPage.open();
-  await loginPage.clickResetPassword();
+  await loginPage.clickPasswordForgotten();
   await lostPasswordPage.fillUsername("test");
   await lostPasswordPage.fillEmail("test@tredgate.cz");
   await lostPasswordPage.clickSend();
