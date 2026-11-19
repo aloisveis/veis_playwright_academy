@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { LostPasswordPage } from "./lost_password_page.ts";
 import { DashboardPage } from "./dashboard_page.ts";
 
@@ -9,6 +9,7 @@ export class LoginPage {
   private readonly passwordInput: Locator;
   private readonly loginButton: Locator;
   private readonly passwordForgottenButton: Locator;
+  private readonly pageHeader: Locator;
   constructor(page: Page) {
     this.page = page;
     this.url = "https://tredgate.com/pmtool";
@@ -16,6 +17,7 @@ export class LoginPage {
     this.passwordInput = page.locator("#password");
     this.loginButton = page.locator('[type="submit"]');
     this.passwordForgottenButton = page.locator("#forget_password");
+    this.pageHeader = page.locator("h3.form-title");
   }
   // Při vytváření metod doporučím přístup začít s atomickými (malými) metodami s jedním krokem a pak vytvářet sdružující metody
   // Například: typeUsername - jeden krok, login - sdružení více kroků
@@ -59,5 +61,13 @@ export class LoginPage {
   async clickPasswordForgotten() {
     await this.passwordForgottenButton.click();
     return new LostPasswordPage(this.page);
+  }
+
+  async checkPageHeaderText(expectedText: string) {
+    await expect(this.pageHeader, "Page Header is Visible").toBeVisible();
+    await expect(this.pageHeader, "Page Header has Text").toHaveText(
+      expectedText,
+    );
+    return this;
   }
 }
