@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "ui": "playwright test --ui"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aloisveis/veis_playwright_academy.git"
