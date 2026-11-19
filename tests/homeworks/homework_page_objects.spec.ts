@@ -1,6 +1,7 @@
 import { test } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 import { EshopDashboardPage } from "../../src/pages/tredgate-eshop/eshop_dashboard_page.ts";
+
 test("Page Object Test: Eshop - Register user", async ({ page }) => {
   const eshopDashboardPage = new EshopDashboardPage(page);
   const randomEmail = faker.internet.email();
@@ -11,6 +12,7 @@ test("Page Object Test: Eshop - Register user", async ({ page }) => {
     length: 10,
     memorable: true,
   });
+
   await eshopDashboardPage
     .open()
     .then((dashboard) => dashboard.clickAccountButton())

@@ -7,6 +7,7 @@ export class DashboardPage {
   private readonly logoutButton: Locator;
   private readonly notificationButton: Locator;
   private readonly projectsButton: Locator;
+  private readonly appNameAnchor: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -14,7 +15,9 @@ export class DashboardPage {
     this.logoutButton = page.locator("#logout");
     this.notificationButton = page.locator("#user_notifications_report");
     this.projectsButton = page.locator("#Projects");
+    this.appNameAnchor = this.page.locator("a.navbar-brand");
   }
+
   async clickProfile() {
     await expect(this.notificationButton).toBeVisible();
     await this.profileButton.click();
@@ -34,5 +37,19 @@ export class DashboardPage {
   async clickProjects() {
     await this.projectsButton.click();
     return new ProjectsPage(this.page);
+  }
+  async assertAppNameAnchor(appName: string) {
+    await expect(
+      this.appNameAnchor,
+      "App Name Anchor is Visible",
+    ).toBeVisible();
+    await expect(this.appNameAnchor, "App Name Anchor has Text").toHaveText(
+      appName,
+    );
+    return this;
+  }
+  async assertProfileButtonVisibility() {
+    await expect(this.profileButton, "Profile Button is Visible").toBeVisible();
+    return this;
   }
 }
